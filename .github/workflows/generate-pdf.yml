@@ -32,10 +32,24 @@ jobs:
     - name: Generate PDF
       run: node scripts/convertToPdf.js "resume.html" "temp/resume.pdf"
 
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
+    - name: Create Tag
+      id: create_tag
+      run: |
+        TAG_NAME="v$(date +'%Y.%m.%d-%H%M')"
+        echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+        git tag $TAG_NAME
+        git push origin $TAG_NAME
+
     - name: Upload PDF to Release
       uses: softprops/action-gh-release@v1
       with:
         files: temp/resume.pdf
+        tag_name: ${{ steps.create_tag.outputs.tag_name }}
         draft: false
         prerelease: false
         generate_release_notes: true
