@@ -44,6 +44,9 @@ jobs:
         echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
         git tag $TAG_NAME
         git push origin $TAG_NAME
+        # Create/update the 'latest' tag
+        git tag -f latest
+        git push -f origin latest
 
     - name: Upload PDF to Release
       uses: softprops/action-gh-release@v1
