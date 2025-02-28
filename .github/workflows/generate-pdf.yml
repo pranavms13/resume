@@ -59,5 +59,17 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
 
+    - name: Create Latest Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: temp/resume.pdf
+        tag_name: latest
+        name: Latest Resume
+        draft: false
+        prerelease: false
+        generate_release_notes: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Clean up
       run: rm -rf temp
