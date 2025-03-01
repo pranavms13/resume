@@ -61,9 +61,9 @@ jobs:
     - name: Create Versioned Release
       uses: softprops/action-gh-release@v1
       with:
-        files: 
-          - temp/resume.pdf
-          - temp/resume.png
+        files: |
+          temp/resume.pdf
+          temp/resume.png
         tag_name: ${{ steps.create_tag.outputs.tag_name }}
         name: "Resume ${{ steps.create_tag.outputs.tag_name }}"
         draft: false
