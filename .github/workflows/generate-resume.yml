@@ -27,14 +27,15 @@ jobs:
     - name: Install Dependencies
       run: npm i --omit=dev
       
-    - name: Create temp directory
-      run: mkdir -p temp
-
     - name: Generate PDF
       run: |
-        node scripts/convertToPdf.js "resume.html" "temp/resume"
-        if [ ! -f "temp/resume.pdf" ]; then
+        node scripts/convertToPdf.js "resume.html" "resume"
+        if [ ! -f "resume.pdf" ]; then
           echo "PDF generation failed"
+          exit 1
+        fi
+        if [ ! -f "resume.png" ]; then
+          echo "PNG generation failed"
           exit 1
         fi
 
@@ -62,8 +63,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          temp/resume.pdf
-          temp/resume.png
+          resume.pdf
+          resume.png
         tag_name: ${{ steps.create_tag.outputs.tag_name }}
         name: "Resume ${{ steps.create_tag.outputs.tag_name }}"
         draft: false
@@ -77,8 +78,8 @@ jobs:
       if: success()
       with:
         files: 
-          - temp/resume.pdf
-          - temp/resume.png
+          resume.pdf
+          resume.png
         tag_name: latest
         name: "Latest Resume"
         body: "This is the latest version of the resume, automatically generated on $(date +'%Y-%m-%d %H:%M:%S')"
@@ -90,4 +91,4 @@ jobs:
 
     - name: Clean up
       if: always()
-      run: rm -rf temp
+      run: rm resume.pdf resume.png
