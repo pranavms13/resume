@@ -75,7 +75,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update Latest Release
-      uses: softprops/action-gh-release@v4
+      uses: softprops/action-gh-release@v1
       if: success()
       with:
         files: |
