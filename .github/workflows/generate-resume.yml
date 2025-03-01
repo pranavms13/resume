@@ -61,7 +61,9 @@ jobs:
     - name: Create Versioned Release
       uses: softprops/action-gh-release@v1
       with:
-        files: temp/resume.pdf
+        files: 
+          - temp/resume.pdf
+          - temp/resume.png
         tag_name: ${{ steps.create_tag.outputs.tag_name }}
         name: "Resume ${{ steps.create_tag.outputs.tag_name }}"
         draft: false
@@ -74,7 +76,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: success()
       with:
-        files: temp/resume.pdf
+        files: 
+          - temp/resume.pdf
+          - temp/resume.png
         tag_name: latest
         name: "Latest Resume"
         body: "This is the latest version of the resume, automatically generated on $(date +'%Y-%m-%d %H:%M:%S')"
