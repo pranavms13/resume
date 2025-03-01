@@ -18,7 +18,7 @@ async function convertHtmlToPdf(htmlPath, pdfPath) {
     
     // Generate PDF with proper print layout
     await page.pdf({
-        path: pdfPath,
+        path: `${pdfPath}.pdf`,
         format: 'A4',
         printBackground: true,
         margin: {
@@ -30,6 +30,11 @@ async function convertHtmlToPdf(htmlPath, pdfPath) {
         scale: 0.97
     });
 
+    await page.screenshot({ 
+        path: `${pdfPath}.png`,
+        fullPage: true
+    });
+
     await browser.close();
 }
 
@@ -37,13 +42,13 @@ async function convertHtmlToPdf(htmlPath, pdfPath) {
 const [,, inputPath, outputPath] = process.argv;
 
 if (!inputPath || !outputPath) {
-    console.error('Usage: node convertToPdf.js <input.html> <output.pdf>');
+    console.error('Usage: node convertToPdf.js <input.html> <output>');
     process.exit(1);
 }
 
 convertHtmlToPdf(inputPath, outputPath)
-    .then(() => console.log(`PDF generated at: ${outputPath}`))
+    .then(() => console.log(`PDF and PNG generated at: ${outputPath}`))
     .catch(err => {
-        console.error('Error generating PDF:', err);
+        console.error('Error generating PDF and PNG:', err);
         process.exit(1);
     });
