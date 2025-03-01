@@ -65,6 +65,7 @@ jobs:
         files: |
           resume.pdf
           resume.png
+          resume.html
         tag_name: ${{ steps.create_tag.outputs.tag_name }}
         name: "Resume ${{ steps.create_tag.outputs.tag_name }}"
         draft: false
@@ -74,12 +75,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update Latest Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v4
       if: success()
       with:
         files: |
           resume.pdf
           resume.png
+          resume.html
         tag_name: latest
         name: "Latest Resume"
         body: "This is the latest version of the resume, automatically generated on $(date +'%Y-%m-%d %H:%M:%S')"
