@@ -26,7 +26,8 @@ async function convertHtmlToPdf(htmlPath, pdfPath) {
             right: '0mm',
             bottom: '0mm',
             left: '0mm'
-        }
+        },
+        scale: 0.97
     });
 
     await browser.close();
